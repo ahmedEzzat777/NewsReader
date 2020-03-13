@@ -15,8 +15,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class WebDataService implements IAsyncDataService {
-    private static final int MAX_RESULTS = 20;
-
     private ArrayList<String> m_listJSON;
     private ArrayList<Record> m_list;
     private String m_topArticlesJSON;
@@ -26,22 +24,16 @@ public class WebDataService implements IAsyncDataService {
     private int m_maxResults;
 
     private MutableLiveData<Feed> m_feed;
-    public WebDataService(MutableLiveData<Feed> feed){
+    public WebDataService(MutableLiveData<Feed> feed,int maxResults){
         init(feed);
         m_localDataService =null;
-        m_maxResults=MAX_RESULTS;
+        m_maxResults=maxResults;
     }
-    public WebDataService(MutableLiveData<Feed> feed,IAsyncDataService localDataService){
+    public WebDataService(MutableLiveData<Feed> feed,int maxResults,IAsyncDataService localDataService){
         init(feed);
         m_localDataService = localDataService;
-        m_maxResults=MAX_RESULTS;
+        m_maxResults=maxResults;
     }
-    public WebDataService(MutableLiveData<Feed> feed,IAsyncDataService localDataService,int maxResults){
-        init(feed);
-        m_localDataService =localDataService;
-        m_maxResults =maxResults;
-    }
-
     private void init(MutableLiveData<Feed> feed){
         m_feed=feed;
         m_topArticlesJSON="";

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsreader.data.DataBaseService;
@@ -17,6 +18,7 @@ import com.example.newsreader.ui.recyclerViewAdapters.MainRecyclerViewAdapter;
 public class MainViewModel extends AndroidViewModel{
     private IAsyncDataService dataService;
     private Context m_context;
+    private SharedPreferences m_sharedPreferences;
     public MutableLiveData<Feed> Model;
     public RecyclerView.Adapter RecyclerAdapter;
 
@@ -25,11 +27,11 @@ public class MainViewModel extends AndroidViewModel{
         m_context = application.getApplicationContext();
         Model = new MutableLiveData<>();
         Model.setValue(new Feed());
-        SharedPreferences sharedPreferences = m_context.getSharedPreferences("com.example.newsreader", Context.MODE_PRIVATE);
-        if(!sharedPreferences.getBoolean("dataStored",false)){
-            sharedPreferences.edit().putBoolean("dataStored",true).apply();
+        m_sharedPreferences = PreferenceManager.getDefaultSharedPreferences(m_context);
+        if(!m_sharedPreferences.getBoolean("dataStored",false)){
+            m_sharedPreferences.edit().putBoolean("dataStored",true).apply();
             DataBaseService dbService = new DataBaseService(Model,m_context);
-            dataService = new WebDataService(Model,dbService);
+            dataService = new WebDataService(Model,getNumberOfArticles(),dbService);
         } else {
             dataService = new DataBaseService(Model,m_context);
         }
@@ -48,7 +50,15 @@ public class MainViewModel extends AndroidViewModel{
         Model.setValue(new Feed()); //clear model
         DataBaseService dbService = new DataBaseService(Model,m_context);
         dbService.deleteData(Model);
-        dataService = new WebDataService(Model,dbService);
+        dataService = new WebDataService(Model,getNumberOfArticles(),dbService);
         dataService.startDataFetch();
+    }
+
+    private int getNumberOfArticles(){
+        String numberOfArticles = m_sharedPreferences.getString("numberOfArticles",null);
+        if(numberOfArticles!=null)
+            return Integer.parseInt(numberOfArticles);
+        else
+            return  10;
     }
 }
