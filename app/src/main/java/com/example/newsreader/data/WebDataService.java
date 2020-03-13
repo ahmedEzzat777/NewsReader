@@ -98,6 +98,7 @@ public class WebDataService implements IAsyncDataService {
 
     private String fetchString(String url){
         String stringToFetch="";
+        StringBuilder stringBuilder = new StringBuilder("");
         HttpURLConnection urlconnection;
         try {
             URL topPostsUrl = new URL(url);
@@ -106,10 +107,10 @@ public class WebDataService implements IAsyncDataService {
             InputStreamReader reader=new InputStreamReader(in);
             int data =reader.read();
             while (data!=-1){
-                char c = (char)data;
-                stringToFetch +=c;
+                stringBuilder.append((char)data);
                 data =reader.read();
             }
+            stringToFetch=stringBuilder.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }
