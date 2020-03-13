@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.newsreader.model.Feed;
 
 public interface IAsyncDataService {
-    void startRecordFetch();
+    void startDataFetch();
+    void postData(MutableLiveData<Feed> feed);
     void refreshModel(MutableLiveData<Feed> feed);
 }

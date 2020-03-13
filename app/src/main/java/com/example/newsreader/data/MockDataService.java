@@ -15,7 +15,7 @@ public class MockDataService implements IAsyncDataService {
         list = new ArrayList<>();
     }
     @Override
-    public void startRecordFetch() {
+    public void startDataFetch() {
         new AsyncDataTask(){
             @Override
             protected void doInBackground() {
@@ -35,6 +35,11 @@ public class MockDataService implements IAsyncDataService {
                 refreshModel(feed);
             }
         };
+
+    }
+
+    @Override
+    public void postData(MutableLiveData<Feed> feed) {
 
     }
 

@@ -16,6 +16,12 @@ public class Record {
         m_author =author;
         m_site=site;
     }
+    public Record(String id,String title,String author,String site){
+        m_id = UUID.fromString(id);
+        m_title = title;
+        m_author =author;
+        m_site=site;
+    }
 
     public UUID get_id() {
         return m_id;

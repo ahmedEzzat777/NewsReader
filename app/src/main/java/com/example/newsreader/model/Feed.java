@@ -6,7 +6,7 @@ import java.util.UUID;
 public class Feed{
     private ArrayList<Record> m_feed;
     public Feed(){
-        m_feed = new ArrayList<Record>();
+        m_feed = new ArrayList<>();
     }
 
     public void addRecord(String title,String author,String site){
@@ -25,6 +25,10 @@ public class Feed{
          }
          return null;
     }
+    public List<Record> getRecords(){
+        return m_feed;
+    }
+
 
     public Record getRecord(int idx){
         return m_feed.get(idx);
