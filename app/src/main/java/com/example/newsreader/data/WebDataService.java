@@ -70,6 +70,11 @@ public class WebDataService implements IAsyncDataService {
 
     }
 
+    @Override
+    public void deleteData(MutableLiveData<Feed> feed) {
+
+    }
+
     private void fetchRecordList(final ArrayList<String> topArticles) {
         new AsyncDataTask(){
             @Override

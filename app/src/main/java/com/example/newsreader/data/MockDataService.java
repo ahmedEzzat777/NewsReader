@@ -44,6 +44,11 @@ public class MockDataService implements IAsyncDataService {
     }
 
     @Override
+    public void deleteData(MutableLiveData<Feed> feed) {
+
+    }
+
+    @Override
     public void refreshModel(MutableLiveData<Feed> feed) {
         feed.setValue(feed.getValue().addRecords(list));
     }

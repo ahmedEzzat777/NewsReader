@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
         binding.setMainViewModel(mainViewModel);
         binding.setLifecycleOwner(this);
 
-        mainViewModel.m_model.observe(this, new Observer<Feed>() {
+        mainViewModel.Model.observe(this, new Observer<Feed>() {
             @Override
             public void onChanged(Feed feed) {
-                mainViewModel.m_adapter.notifyDataSetChanged();
+                mainViewModel.refreshUI();
             }
         });
     }

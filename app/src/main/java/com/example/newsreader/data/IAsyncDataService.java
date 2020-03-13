@@ -7,5 +7,6 @@ import com.example.newsreader.model.Feed;
 public interface IAsyncDataService {
     void startDataFetch();
     void postData(MutableLiveData<Feed> feed);
+    void deleteData(MutableLiveData<Feed> feed);
     void refreshModel(MutableLiveData<Feed> feed);
 }

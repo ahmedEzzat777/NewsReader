@@ -25,4 +25,6 @@ public interface ArticleDao {
     void update(Article article);
     @Delete
     void delete(Article article);
+    @Query("DELETE FROM Articles")
+    void deleteAll();
 }

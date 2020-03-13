@@ -67,6 +67,23 @@ public class DataBaseService implements IAsyncDataService {
     }
 
     @Override
+    public void deleteData(MutableLiveData<Feed> feed) {
+        new AsyncDataTask(){
+
+            @Override
+            protected void doInBackground() {
+                ArticleDatabase db =ArticleDatabase.getInstance(m_context);
+                db.articleDao().deleteAll();
+            }
+
+            @Override
+            protected void onPostExecute() {
+                refreshModel(m_feed);
+            }
+        };
+    }
+
+    @Override
     public void refreshModel(MutableLiveData<Feed> feed) {
         feed.setValue(feed.getValue().addRecords(m_list));
     }
