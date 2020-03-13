@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsreader.model.Feed;
@@ -23,6 +24,12 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     public MainRecyclerViewAdapter(Context context,MutableLiveData<Feed> feed){
         liveFeed = feed;
         parentContext = context;
+        liveFeed.observeForever(new Observer<Feed>() {
+            @Override
+            public void onChanged(Feed feed) {
+                notifyDataSetChanged();
+            }
+        });
     }
     @NonNull
     @Override

@@ -39,11 +39,6 @@ public class MainViewModel extends AndroidViewModel{
         RecyclerAdapter = new MainRecyclerViewAdapter(m_context, Model);
         dataService.startDataFetch();
     }
-
-    public void refreshUI(){
-        RecyclerAdapter.notifyDataSetChanged();
-    }
-
     public void refresh(){
         if(m_context == null)
             return;

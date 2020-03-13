@@ -1,24 +1,19 @@
 package com.example.newsreader.ui.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.newsreader.R;
-import com.example.newsreader.model.Feed;
-import com.example.newsreader.ui.viewModels.MainViewModel;
 import com.example.newsreader.databinding.ActivityMainBinding;
+import com.example.newsreader.ui.viewModels.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
@@ -31,13 +26,6 @@ public class MainActivity extends AppCompatActivity {
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setMainViewModel(mainViewModel);
         binding.setLifecycleOwner(this);
-
-        mainViewModel.Model.observe(this, new Observer<Feed>() {
-            @Override
-            public void onChanged(Feed feed) {
-                mainViewModel.refreshUI();
-            }
-        });
     }
 
     @Override
