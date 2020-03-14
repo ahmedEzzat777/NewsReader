@@ -1,6 +1,6 @@
 package com.example.newsreader.ui.recyclerViewAdapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +20,12 @@ import com.example.newsreader.R;
 import com.example.newsreader.ui.activities.WebViewActivity;
 
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.ViewHolder> {
-    MutableLiveData<Feed> liveFeed;
-    Context parentContext;
-    public MainRecyclerViewAdapter(Context context,MutableLiveData<Feed> feed){
-        liveFeed = feed;
-        parentContext = context;
-        liveFeed.observeForever(new Observer<Feed>() {
+    private MutableLiveData<Feed> feed;
+    private Activity parentActivity;
+    public MainRecyclerViewAdapter(Activity activity, MutableLiveData<Feed> feed){
+        this.feed = feed;
+        parentActivity = activity;
+        this.feed.observe((LifecycleOwner) parentActivity, new Observer<Feed>() {
             @Override
             public void onChanged(Feed feed) {
                 notifyDataSetChanged();
@@ -40,7 +41,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        final Record rec = liveFeed.getValue().getRecord(position);
+        final Record rec = feed.getValue().getRecord(position);
         holder.Title.setText(rec.get_title());
         holder.Author.setText(rec.get_author());
         holder.ParentLayout.setOnClickListener(new View.OnClickListener() {
@@ -49,17 +50,16 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
                 //go to website with site url
                 if(rec.get_site() == null)
                     return;
-                Intent intent = new Intent(parentContext, WebViewActivity.class);
+                Intent intent = new Intent(parentActivity, WebViewActivity.class);
                 intent.putExtra("url",rec.get_site());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                parentContext.startActivity(intent);
+                parentActivity.startActivity(intent);
             }
         });
     }
-
     @Override
     public int getItemCount() {
-        return liveFeed.getValue().getFeedSize();
+        return feed.getValue().getFeedSize();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

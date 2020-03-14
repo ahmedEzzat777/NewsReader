@@ -1,25 +1,26 @@
 package com.example.newsreader.data;
 
-import android.os.AsyncTask;
+import needle.Needle;
+import needle.UiRelatedTask;
 
-public abstract class AsyncDataTask extends AsyncTask<Void,Void,Void> {
+public abstract class AsyncDataTask{
 
     public AsyncDataTask(){
-        execute();
-    }
-    @Override
-    protected Void doInBackground(Void... voids) {
-        doInBackground();
-        return null;
+        Needle.onBackgroundThread().execute(new UiRelatedTask<Void>() {
+            @Override
+            protected Void doWork() {
+                doInBackground();
+                return null;
+            }
+
+            @Override
+            protected void thenDoUiRelatedWork(Void v) {
+                onPostExecute();
+            }
+        });
     }
 
     protected abstract void doInBackground();
-
-    @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        onPostExecute();
-    }
 
     protected abstract void onPostExecute();
 

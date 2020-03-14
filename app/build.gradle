@@ -38,4 +38,7 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.4'
     annotationProcessor 'androidx.room:room-compiler:2.2.4'
     implementation 'com.google.android.material:material:1.1.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.2'
+    implementation 'com.zsoltsafrany:needle:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }

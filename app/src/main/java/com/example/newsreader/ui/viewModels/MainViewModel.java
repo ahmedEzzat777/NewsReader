@@ -7,21 +7,17 @@ import android.content.SharedPreferences;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.preference.PreferenceManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.newsreader.data.DataBaseService;
 import com.example.newsreader.data.IAsyncDataService;
 import com.example.newsreader.data.WebDataService;
 import com.example.newsreader.model.Feed;
-import com.example.newsreader.ui.recyclerViewAdapters.MainRecyclerViewAdapter;
 
 public class MainViewModel extends AndroidViewModel{
     private IAsyncDataService dataService;
     private Context m_context;
     private SharedPreferences m_sharedPreferences;
     public MutableLiveData<Feed> Model;
-    public RecyclerView.Adapter RecyclerAdapter;
-
     public MainViewModel(Application application){
         super(application);
         m_context = application.getApplicationContext();
@@ -35,8 +31,6 @@ public class MainViewModel extends AndroidViewModel{
         } else {
             dataService = new DataBaseService(Model,m_context);
         }
-
-        RecyclerAdapter = new MainRecyclerViewAdapter(m_context, Model);
         dataService.startDataFetch();
     }
     public void refresh(){
